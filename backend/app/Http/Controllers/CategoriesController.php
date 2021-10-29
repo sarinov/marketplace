@@ -14,7 +14,8 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        //
+        return Categories::get();
+
     }
 
     /**
@@ -25,7 +26,13 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       $validated = $request->validate([
+            'name' => 'required',
+        ]);
+
+        $categories = Categories::create($validated);
+        
+        return $categories; 
     }
 
     /**
@@ -46,9 +53,13 @@ class CategoriesController extends Controller
      * @param  \App\Models\Categories  $categories
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Categories $categories)
+    public function update(Request $request, $id)
     {
-        //
+        $categories = Categories::find($id);
+
+        $categories->update($request->all());
+
+        return  $categories;  
     }
 
     /**
@@ -57,8 +68,11 @@ class CategoriesController extends Controller
      * @param  \App\Models\Categories  $categories
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Categories $categories)
+    public function destroy($id)
     {
-        //
+        $categories = Categories::find($id);
+
+        $categories->delete();
+        return   $categories; 
     }
 }

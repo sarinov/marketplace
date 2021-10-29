@@ -14,7 +14,7 @@ class CommentsController extends Controller
      */
     public function index()
     {
-        //
+        return Comments::get();
     }
 
     /**
@@ -25,7 +25,14 @@ class CommentsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'product_id' => 'required',
+            'content' => 'required'
+        ]);
+
+        $comments = Comments::create($validated);
+        
+        return $comments; 
     }
 
     /**
@@ -46,9 +53,13 @@ class CommentsController extends Controller
      * @param  \App\Models\Comments  $comments
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Comments $comments)
+    public function update(Request $request, $id)
     {
-        //
+        $comments = Comments::find($id);
+
+        $comments->update($request->all());
+
+        return  $comments;  
     }
 
     /**
@@ -57,8 +68,11 @@ class CommentsController extends Controller
      * @param  \App\Models\Comments  $comments
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Comments $comments)
+    public function destroy($id)
     {
-        //
+        $comments = Comments::find($id);
+
+        $comments->delete();
+        return   $comments; 
     }
 }
