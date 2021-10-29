@@ -14,7 +14,7 @@ class ProductsShopsController extends Controller
      */
     public function index()
     {
-        //
+        return Products_shops::get();
     }
 
     /**
@@ -36,7 +36,13 @@ class ProductsShopsController extends Controller
      */
     public function show(Products_shops $products_shops)
     {
-        //
+        $validated = $request->validate([
+            'product_id' => 'required',
+        ]);
+
+        $products_shops = Products_shops::create($validated);
+        
+        return $products_shops; 
     }
 
     /**
@@ -46,9 +52,13 @@ class ProductsShopsController extends Controller
      * @param  \App\Models\Products_shops  $products_shops
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Products_shops $products_shops)
+    public function update(Request $request, $id)
     {
-        //
+        $products_shops = Products_shops::find($id);
+
+        $products_shops->update($request->all());
+
+        return  $products_shops;  
     }
 
     /**
@@ -57,8 +67,11 @@ class ProductsShopsController extends Controller
      * @param  \App\Models\Products_shops  $products_shops
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Products_shops $products_shops)
+    public function destroy($id)
     {
-        //
+        $products_shops = Products_shops::find($id);
+
+        $products_shops->delete();
+        return   $products_shops; 
     }
 }

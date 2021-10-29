@@ -14,7 +14,7 @@ class FavoritesController extends Controller
      */
     public function index()
     {
-        //
+        return Favorites::get();
     }
 
     /**
@@ -25,7 +25,13 @@ class FavoritesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         $validated = $request->validate([
+            'product_id' => 'required',
+        ]);
+
+        $favorites = Favorites::create($validated);
+        
+        return $favorites; 
     }
 
     /**
@@ -46,9 +52,13 @@ class FavoritesController extends Controller
      * @param  \App\Models\Favorites  $favorites
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Favorites $favorites)
+    public function update(Request $request, $id)
     {
-        //
+        $favorites = Favorites::find($id);
+
+        $favorites->update($request->all());
+
+        return  $favorites;  
     }
 
     /**
@@ -57,8 +67,11 @@ class FavoritesController extends Controller
      * @param  \App\Models\Favorites  $favorites
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Favorites $favorites)
+    public function destroy($id)
     {
-        //
+        $favorites = Favorites::find($id);
+
+        $favorites->delete();
+        return   $favorites; 
     }
 }
