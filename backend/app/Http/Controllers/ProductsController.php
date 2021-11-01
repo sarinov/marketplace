@@ -53,6 +53,7 @@ class ProductsController extends Controller
     public function show(Request $request)
     {
 
+
         $data = $request->all();
         $validator = Validator::make($data, [
             'min_price' => 'numeric',
@@ -66,7 +67,7 @@ class ProductsController extends Controller
         ]);
 
         if ($validator->fails()) {
-           return $validator->errors()->all();
+           return response()->json($validator->errors(), 400);;
         }
         if (!array_key_exists('limit', $data)){
             $data['limit'] = 25;
@@ -162,4 +163,6 @@ class ProductsController extends Controller
         return   $product; 
           
     }
+
+    
 }

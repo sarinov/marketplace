@@ -12,6 +12,13 @@ class Comments extends Model
     protected $fillable = [
         'product_id',
         'user_id',
-        'content'
+        'content',
+        'reply_id'
     ];
+
+
+    function replies(){
+        return $this->hasMany($this, 'reply_id');
+    }
+
 }

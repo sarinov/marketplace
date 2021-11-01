@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Comments;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CommentsController extends Controller
 {
@@ -41,9 +42,19 @@ class CommentsController extends Controller
      * @param  \App\Models\Comments  $comments
      * @return \Illuminate\Http\Response
      */
-    public function show(Comments $comments)
+    public function show(Comments $comments, $product_id)
     {
-        //
+        // $comment = DB::table('comments as all_c')
+        // ->where('all_c.product_id', '=', $product_id)
+        // ->join('comments as repl_c', 'all_c.id', '=', 'repl_c.reply_id')
+        // ->select('all_c.* AS menu_name_parent', 'B.menu_name__v1 AS menu_name_child')
+        // ->get();
+        // // $users = DB::table('all_menus as A')
+        // // ->join('all_menus as B', 'A.id', '=', 'B.parent_menu_id__v1')
+        // // ->toSql();
+
+        $comment = Comments::with('replies')->where('product_id', '=', $product_id)->get();
+        return $comment;
     }
 
     /**

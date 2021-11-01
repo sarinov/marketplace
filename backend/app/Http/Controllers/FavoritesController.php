@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Favorites;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class FavoritesController extends Controller
 {
@@ -28,6 +29,7 @@ class FavoritesController extends Controller
          $validated = $request->validate([
             'product_id' => 'required',
         ]);
+        $validated['user_id'] = auth()->user()->id;
 
         $favorites = Favorites::create($validated);
         
@@ -40,9 +42,16 @@ class FavoritesController extends Controller
      * @param  \App\Models\Favorites  $favorites
      * @return \Illuminate\Http\Response
      */
-    public function show(Favorites $favorites)
+    public function show(Request $request)
     {
-        //
+        
+        $favorites = DB::table('favorites')
+        ->join('products', 'favorites.product_id', '=', 'products.id')
+        ->where('favorites.user_id', '=', auth()->user()->id)
+        ->get();
+
+        return $favorites;
+
     }
 
     /**

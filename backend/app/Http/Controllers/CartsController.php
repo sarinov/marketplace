@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Carts;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CartsController extends Controller
 {
@@ -27,9 +28,8 @@ class CartsController extends Controller
     {
         $validated = $request->validate([
             'product_id' => 'required',
-            'user_id' => 'numeric'
         ]);
-
+        $validated['user_id'] = auth()->user()->id;
         $carts = Carts::create($validated);
         
         return $carts; 
@@ -41,9 +41,14 @@ class CartsController extends Controller
      * @param  \App\Models\Carts  $carts
      * @return \Illuminate\Http\Response
      */
-    public function show(Carts $carts)
+    public function show(Request $reques)
     {
-        //
+        $cart = DB::table('carts')
+        ->join('products', 'carts.product_id', '=', 'products.id')
+        ->where('carts.user_id', '=', auth()->user()->id)
+        ->get();
+
+        return $cart;
     }
 
     /**
