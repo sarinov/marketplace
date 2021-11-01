@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Shops;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ShopsController extends Controller
 {
@@ -41,9 +42,14 @@ class ShopsController extends Controller
      * @param  \App\Models\Shops  $shops
      * @return \Illuminate\Http\Response
      */
-    public function show(Shops $shops)
+    public function show(Request $request, $product_id)
     {
-        //
+        $shops = DB::table('shops')
+        ->join('products_shops', 'shops.id', '=', 'products_shops.shop_id')
+        ->where('products_shops.product_id', '=', $product_id)
+        ->get(); 
+
+        return $shops;
     }
 
     /**

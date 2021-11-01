@@ -47,7 +47,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::put('/comments/{id}', 'App\Http\Controllers\CommentsController@update');
     Route::delete('/comments/{id}', 'App\Http\Controllers\CommentsController@destroy');
 
-    Route::get('/shops', 'App\Http\Controllers\ShopsController@index');
+    Route::get('/shops/{product_id}', 'App\Http\Controllers\ShopsController@show');
     Route::post('/shops', 'App\Http\Controllers\ShopsController@store');
     Route::put('/shops/{id}', 'App\Http\Controllers\ShopsController@update');
     Route::delete('/shops/{id}', 'App\Http\Controllers\ShopsController@destroy');
