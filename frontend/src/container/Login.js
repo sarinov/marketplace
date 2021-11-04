@@ -3,17 +3,19 @@ import Footer from "../component/Footer"
 import { useState } from "react"
 import { loginUser } from "../store/actions/authActions"
 import {connect} from 'react-redux'
+import {useHistory} from 'react-router-dom'
 
 function Login (props){
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const history = useHistory()
 
     const login = (e) => {
         let userData = {
             email: email,
             password: password
         }
-    props.loginUser(userData)
+    props.loginUser(userData, history)
     e.preventDefault();
     }
 
