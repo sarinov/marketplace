@@ -1,4 +1,14 @@
+import {useHistory} from 'react-router-dom'
 function Header (){
+
+    const isAuth = localStorage.isAuth
+    const history = useHistory()
+    const logout = () => {
+        localStorage.removeItem('token')
+        localStorage.setItem('isAuth', false)
+        history.push('/')
+    }
+
     return (
         <header>
             <div className="collapse bg-dark" id="navbarHeader">
@@ -25,10 +35,18 @@ function Header (){
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
                     <strong>Album</strong>
                 </a>
-                <div>
-                <a href="/signup" className="navbar-links">Signup</a>
-                <a href="/login" className="navbar-links">Signin</a>
-                </div>
+                {
+                    isAuth === 'true' ? 
+                    <div>
+                        <a href="/profile" className="navbar-links">Profile</a>
+                        <button href="/login" className="btn btn-primary" onClick={() => logout()}>Logout</button>
+                    </div> 
+                    : 
+                    <div>
+                        <a href="/signup" className="navbar-links">Signup</a>
+                        <a href="/login" className="navbar-links">Signin</a>
+                    </div>
+                }
                 </div>
             </div>
             </header>

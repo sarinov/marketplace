@@ -6,6 +6,7 @@ import Signup from './container/Signup';
 import Login from './container/Login';
 import store from "./store/store"
 import {Provider} from 'react-redux'
+import Profile from './container/Profile';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route exact path='/' component={Home} />
         <Route exact path='/signup' component={Signup} />
         <Route exact path='/login' component={Login} />
+        <Route exact path='/profile' component={Profile} />
       </BrowserRouter>
     </div>
     </Provider>
