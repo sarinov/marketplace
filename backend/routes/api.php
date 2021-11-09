@@ -27,7 +27,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::get('/user-profile', [AuthController::class, 'userProfile']); 
 // Route::get('/products', 'App\Http\Controllers\ProductsController@index');
-    Route::post('/products', 'App\Http\Controllers\ProductsController@store');
+    Route::post('/products', 'App\Http\Controllers\ProductsController@show');
     Route::put('/products/{id}', 'App\Http\Controllers\ProductsController@update');
     Route::delete('/products/{id}', 'App\Http\Controllers\ProductsController@destroy');
 
@@ -41,7 +41,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('/categories', 'App\Http\Controllers\CategoriesController@store');
     Route::put('/categories/{id}', 'App\Http\Controllers\CategoriesController@update');
     Route::delete('/categories/{id}', 'App\Http\Controllers\CategoriesController@destroy');
-    
+
     Route::get('/favorites', 'App\Http\Controllers\FavoritesController@show');
     Route::post('/favorites', 'App\Http\Controllers\FavoritesController@store');
     Route::put('/favorites/{id}', 'App\Http\Controllers\FavoritesController@update');
