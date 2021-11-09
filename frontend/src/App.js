@@ -7,6 +7,7 @@ import Login from './container/Login';
 import store from "./store/store"
 import {Provider} from 'react-redux'
 import Profile from './container/Profile';
+import Detail from './container/Detail';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route exact path='/signup' component={Signup} />
         <Route exact path='/login' component={Login} />
         <Route exact path='/profile' component={Profile} />
+        <Route exact path='/detail/:id' component={Detail} />
       </BrowserRouter>
     </div>
     </Provider>

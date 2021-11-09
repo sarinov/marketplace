@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import {useHistory} from 'react-router-dom'
 import Header from '../component/Header'
 import {Modal, Button, Form} from 'react-bootstrap'
@@ -20,6 +20,7 @@ function Profile (props) {
     const [img, setImg] = useState('')
     const [like, setLike] = useState('')
     const [dislike, setDislike] = useState('')
+    const [category_id, setCategoryId] = useState('')
 
     const addProduct = () => {
         let productData = {
@@ -28,10 +29,22 @@ function Profile (props) {
             price: price,
             img: img,
             like: like,
-            dislike: dislike
+            dislike: dislike,
+            category_id : category_id
         }
        props.addProducts(productData, history) 
     }
+
+    useEffect(()=> {
+        props.getCategories()
+    }, [],)
+
+    const {categories} = props.categoryReducer
+    console.log(categories)
+
+    let categoryRow = categories.map(item => (
+        <option value={item.id}>{item.name}</option>
+    ))
 
     return (
         <div>
@@ -71,6 +84,12 @@ function Profile (props) {
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                             <Form.Label>Price</Form.Label>
                             <Form.Control type="number" placeholder="Enter price" onChange={(e) => setPrice(e.target.value)} />
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="formBasicPassword">
+                            <Form.Label>Category</Form.Label>
+                            <Form.Select aria-label="Category" onChange ={(e) => setCategoryId(e.target.value)}>
+                                {categoryRow}
+                            </Form.Select>
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                             <Form.Label>Like</Form.Label>

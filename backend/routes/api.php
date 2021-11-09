@@ -37,6 +37,11 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::put('/carts/{id}', 'App\Http\Controllers\CartsController@update');
     Route::delete('/carts/{id}', 'App\Http\Controllers\CartsController@destroy');
 
+    Route::get('/categories', 'App\Http\Controllers\CategoriesController@show');
+    Route::post('/categories', 'App\Http\Controllers\CategoriesController@store');
+    Route::put('/categories/{id}', 'App\Http\Controllers\CategoriesController@update');
+    Route::delete('/categories/{id}', 'App\Http\Controllers\CategoriesController@destroy');
+    
     Route::get('/favorites', 'App\Http\Controllers\FavoritesController@show');
     Route::post('/favorites', 'App\Http\Controllers\FavoritesController@store');
     Route::put('/favorites/{id}', 'App\Http\Controllers\FavoritesController@update');
